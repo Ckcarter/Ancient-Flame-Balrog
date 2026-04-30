@@ -1,7 +1,6 @@
 {
   "pack": {
-    "description": "ancient_flame_balrog resources",
-    "pack_format": 15,
-    "forge:server_data_pack_format": 12
+    "description": "Ancient Flame Balrog resources",
+    "pack_format": 15
   }
 }
