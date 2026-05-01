@@ -19,7 +19,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<AncientFlameBalrogEntity>> ANCIENT_FLAME_BALROG =
             ENTITY_TYPES.register("ancient_flame_balrog", () -> EntityType.Builder
                     .of(AncientFlameBalrogEntity::new, MobCategory.MONSTER)
-                    .sized(2.2F, 4.8F)
+                    .sized(2.4F, 5.4F)
                     .fireImmune()
                     .clientTrackingRange(12)
                     .updateInterval(3)

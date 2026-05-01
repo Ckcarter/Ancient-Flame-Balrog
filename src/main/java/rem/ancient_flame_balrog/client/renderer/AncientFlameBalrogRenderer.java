@@ -14,7 +14,7 @@ public class AncientFlameBalrogRenderer extends MobRenderer<AncientFlameBalrogEn
             new ResourceLocation(AncientFlameBalrog.MODID, "textures/entity/ancient_flame_balrog.png");
 
     public AncientFlameBalrogRenderer(EntityRendererProvider.Context context) {
-        super(context, new AncientFlameBalrogModel<>(context.bakeLayer(AncientFlameBalrogModel.LAYER_LOCATION)), 1.2F);
+        super(context, new AncientFlameBalrogModel<>(context.bakeLayer(AncientFlameBalrogModel.LAYER_LOCATION)), 1.6F);
     }
 
     @Override

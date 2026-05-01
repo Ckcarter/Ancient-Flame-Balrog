@@ -12,6 +12,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -46,6 +48,17 @@ public class AncientFlameBalrogEntity extends Monster implements RangedAttackMob
         super(type, level);
         this.xpReward = 750;
         this.setPersistenceRequired();
+        this.setMaxUpStep(2.0F);
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return EntityDimensions.scalable(2.4F, 5.4F);
+    }
+
+    @Override
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+        return 4.8F;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
