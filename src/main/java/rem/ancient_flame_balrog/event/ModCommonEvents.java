@@ -2,8 +2,9 @@ package rem.ancient_flame_balrog.event;
 
 import rem.ancient_flame_balrog.AncientFlameBalrog;
 import rem.ancient_flame_balrog.entity.AncientFlameBalrogEntity;
-import rem.ancient_flame_balrog.registry.ModEntities;
+import rem.ancient_flame_balrog.entity.ModEntities;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -23,7 +24,7 @@ public class ModCommonEvents {
                 ModEntities.ANCIENT_FLAME_BALROG.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                AncientFlameBalrogEntity::checkBalrogSpawnRules,
+                (type, level, reason, pos, random) -> Monster.checkMonsterSpawnRules(type, level, reason, pos, random),
                 SpawnPlacementRegisterEvent.Operation.REPLACE
         );
     }

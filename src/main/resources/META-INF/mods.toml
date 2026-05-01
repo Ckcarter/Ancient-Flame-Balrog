@@ -1,26 +1,9 @@
 modLoader="javafml"
 loaderVersion="[47,)"
-license="MIT"
+license="All Rights Reserved"
 
 [[mods]]
 modId="ancient_flame_balrog"
 version="1.0.0"
 displayName="Ancient Flame Balrog"
-authors="Che"
-description='''
-Adds the Ancient Flame Balrog boss mob with boss bar, fire attacks, spawn egg, loot, wings, horns, and flame effects.
-'''
-
-[[dependencies.ancient_flame_balrog]]
-modId="forge"
-mandatory=true
-versionRange="[47,)"
-ordering="NONE"
-side="BOTH"
-
-[[dependencies.ancient_flame_balrog]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.20.1,1.21)"
-ordering="NONE"
-side="BOTH"
+description='''Adds a full Ancient Flame Balrog boss mob.'''

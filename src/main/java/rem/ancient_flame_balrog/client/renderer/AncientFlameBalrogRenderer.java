@@ -1,6 +1,7 @@
-package rem.ancient_flame_balrog.client;
+package rem.ancient_flame_balrog.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -13,16 +14,11 @@ public class AncientFlameBalrogRenderer extends MobRenderer<AncientFlameBalrogEn
             new ResourceLocation(AncientFlameBalrog.MODID, "textures/entity/ancient_flame_balrog.png");
 
     public AncientFlameBalrogRenderer(EntityRendererProvider.Context context) {
-        super(context, new AncientFlameBalrogModel<>(context.bakeLayer(AncientFlameBalrogModel.LAYER_LOCATION)), 1.25F);
+        super(context, new AncientFlameBalrogModel<>(context.bakeLayer(AncientFlameBalrogModel.LAYER_LOCATION)), 1.2F);
     }
 
     @Override
     public ResourceLocation getTextureLocation(AncientFlameBalrogEntity entity) {
         return TEXTURE;
-    }
-
-    @Override
-    protected void scale(AncientFlameBalrogEntity entity, PoseStack poseStack, float partialTick) {
-        poseStack.scale(1.15F, 1.15F, 1.15F);
     }
 }
