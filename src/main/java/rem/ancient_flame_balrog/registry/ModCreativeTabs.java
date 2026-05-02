@@ -22,6 +22,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.FIRE_HEART.get());
                         output.accept(ModItems.FLAMING_BALROG_SWORD.get());
                         output.accept(ModItems.SHADOW_BLADE.get());
+
+                        output.accept(ModItems.BALROG_PROXIMITY_SPAWNER.get());
                     })
                     .build());
 

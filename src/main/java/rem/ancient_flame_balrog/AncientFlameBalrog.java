@@ -6,6 +6,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import rem.ancient_flame_balrog.entity.ModEntities;
 import rem.ancient_flame_balrog.registry.ModCreativeTabs;
 import rem.ancient_flame_balrog.registry.ModItems;
+import rem.ancient_flame_balrog.registry.ModBlocks;
+import rem.ancient_flame_balrog.registry.ModBlockEntities;
 import rem.ancient_flame_balrog.registry.ModSounds;
 
 @Mod(AncientFlameBalrog.MODID)
@@ -15,6 +17,8 @@ public class AncientFlameBalrog {
     public AncientFlameBalrog() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModEntities.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
         ModSounds.register(modEventBus);
         ModCreativeTabs.register(modEventBus);

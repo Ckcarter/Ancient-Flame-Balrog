@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ancient_flame_balrog:balrog_proximity_spawner"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "used=false": { "model": "ancient_flame_balrog:block/balrog_proximity_spawner" },
+    "used=true": { "model": "ancient_flame_balrog:block/balrog_proximity_spawner_used" }
+  }
+}
