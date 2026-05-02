@@ -20,7 +20,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -76,17 +78,26 @@ public class AncientFlameBalrogEntity extends Monster implements RangedAttackMob
                 .add(Attributes.ARMOR_TOUGHNESS, 20.0D)
                 .add(Attributes.ATTACK_DAMAGE, 42.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 2.7D)
-                .add(Attributes.MOVEMENT_SPEED, 0.18D)
+                .add(Attributes.MOVEMENT_SPEED, 0.350D)
                 .add(Attributes.FOLLOW_RANGE, 96.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.72D, false));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.55D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 48.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        super.registerGoals();
+
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+
+        // Strong chase behavior. The Balrog should always walk at its target.
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.25D, true));
+        this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 1.20D, 96.0F));
+
+        // Only idle when it has nothing to attack.
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.65D));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 64.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
@@ -94,6 +105,9 @@ public class AncientFlameBalrogEntity extends Monster implements RangedAttackMob
     @Override
     public void tick() {
         super.tick();
+
+        this.setNoAi(false);
+        forceBossPursuit();
 
         // Keep the Balrog armed with the custom flaming sword.
         if (!this.level().isClientSide && !this.getMainHandItem().is(ModItems.SHADOW_BLADE.get())) {
@@ -106,6 +120,89 @@ public class AncientFlameBalrogEntity extends Monster implements RangedAttackMob
         if (this.level().isClientSide) {
             spawnFinalBalrogFlames();
         }
+    }
+
+    /**
+     * Vanilla pathfinding can fail for very large boss mobs because their 3x8.5 hitbox
+     * needs a huge clear path. This method gives the boss a direct walking push toward
+     * the nearest survival/adventure player, so it still moves like a boss on normal terrain.
+     */
+    private void forceBossPursuit() {
+        if (this.level().isClientSide || this.isNoAi()) {
+            return;
+        }
+
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive() || (target instanceof Player player && (player.isCreative() || player.isSpectator()))) {
+            Player nearest = this.level().getNearestPlayer(this, 96.0D);
+            if (nearest != null && !nearest.isCreative() && !nearest.isSpectator()) {
+                this.setTarget(nearest);
+                target = nearest;
+            }
+        }
+
+        if (target == null || !target.isAlive()) {
+            return;
+        }
+
+        faceTargetNow(target);
+
+        double distanceSqr = this.distanceToSqr(target);
+        if (distanceSqr <= this.getMeleeAttackRangeSqr(target)) {
+            return;
+        }
+
+        faceTargetNow(target);
+        this.getNavigation().moveTo(target, 1.25D);
+
+        Vec3 toTarget = new Vec3(target.getX() - this.getX(), 0.0D, target.getZ() - this.getZ());
+        if (toTarget.lengthSqr() < 0.0001D) {
+            return;
+        }
+
+        Vec3 direction = toTarget.normalize();
+        double pushSpeed = this.ragePhaseStarted ? 0.16D : 0.13D;
+        Vec3 current = this.getDeltaMovement();
+        this.setDeltaMovement(
+                current.x * 0.70D + direction.x * pushSpeed,
+                current.y,
+                current.z * 0.70D + direction.z * pushSpeed
+        );
+        this.hasImpulse = true;
+    }
+
+    /**
+     * Force the Balrog to visually face its current target.
+     * This rotates the whole boss body and syncs the head/body render yaw so the model
+     * looks directly at the player instead of staring off to the side.
+     */
+    private void faceTargetNow(LivingEntity target) {
+        if (target == null) {
+            return;
+        }
+
+        double dx = target.getX() - this.getX();
+        double dz = target.getZ() - this.getZ();
+        if (dx * dx + dz * dz < 0.0001D) {
+            return;
+        }
+
+        float wantedYaw = (float)(Math.toDegrees(Math.atan2(dz, dx)) - 90.0D);
+
+        this.setYRot(wantedYaw);
+        this.yRotO = wantedYaw;
+        this.yBodyRot = wantedYaw;
+        this.yBodyRotO = wantedYaw;
+        this.yHeadRot = wantedYaw;
+        this.yHeadRotO = wantedYaw;
+
+        double dy = target.getEyeY() - this.getEyeY();
+        double horizontal = Math.sqrt(dx * dx + dz * dz);
+        float wantedPitch = (float)(-(Math.toDegrees(Math.atan2(dy, horizontal))));
+        this.setXRot(wantedPitch);
+        this.xRotO = wantedPitch;
+
+        this.getLookControl().setLookAt(target, 60.0F, 60.0F);
     }
 
     private void spawnFinalBalrogFlames() {
@@ -194,13 +291,13 @@ public class AncientFlameBalrogEntity extends Monster implements RangedAttackMob
 
         if (introTicks > 0) {
             introTicks--;
-            this.getLookControl().setLookAt(target, 20.0F, 20.0F);
+            faceTargetNow(target);
             return;
         }
 
         if (attackWindup > 0) {
             attackWindup--;
-            this.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            faceTargetNow(target);
             if (attackWindup == 0) {
                 executeQueuedAttack(target);
                 attackCooldown = ragePhaseStarted ? 95 : 125;
