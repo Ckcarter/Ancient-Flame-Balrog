@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "ancient_flame_balrog:item/flaming_balrog_sword"
+  }
+}

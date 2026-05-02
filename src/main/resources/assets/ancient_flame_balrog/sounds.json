@@ -1,0 +1,32 @@
+{
+  "balrog_roar": {
+    "subtitle": "subtitles.ancient_flame_balrog.balrog_roar",
+    "sounds": [
+      "ancient_flame_balrog:balrog_roar"
+    ]
+  },
+  "balrog_wings": {
+    "subtitle": "subtitles.ancient_flame_balrog.balrog_wings",
+    "sounds": [
+      "ancient_flame_balrog:balrog_wings"
+    ]
+  },
+  "balrog_fire": {
+    "subtitle": "subtitles.ancient_flame_balrog.balrog_fire",
+    "sounds": [
+      "ancient_flame_balrog:balrog_fire"
+    ]
+  },
+  "balrog_boss_intro": {
+    "subtitle": "subtitles.ancient_flame_balrog.balrog_boss_intro",
+    "sounds": [
+      "ancient_flame_balrog:balrog_boss_intro"
+    ]
+  },
+  "balrog_slam": {
+    "subtitle": "subtitles.ancient_flame_balrog.balrog_slam",
+    "sounds": [
+      "ancient_flame_balrog:balrog_slam"
+    ]
+  }
+}

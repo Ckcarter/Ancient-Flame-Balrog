@@ -8,6 +8,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import rem.ancient_flame_balrog.AncientFlameBalrog;
 import rem.ancient_flame_balrog.entity.ModEntities;
+import rem.ancient_flame_balrog.item.FlamingBalrogSwordItem;
+import rem.ancient_flame_balrog.item.ShadowBladeItem;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -22,6 +24,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> FIRE_HEART =
             ITEMS.register("fire_heart", () -> new Item(new Item.Properties().fireResistant()));
+
+    public static final RegistryObject<Item> FLAMING_BALROG_SWORD =
+            ITEMS.register("flaming_balrog_sword", FlamingBalrogSwordItem::new);
+
+    public static final RegistryObject<Item> SHADOW_BLADE =
+            ITEMS.register("shadow_blade", ShadowBladeItem::new);
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

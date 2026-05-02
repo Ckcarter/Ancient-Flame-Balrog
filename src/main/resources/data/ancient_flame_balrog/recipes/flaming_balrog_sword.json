@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " F ",
+    " N ",
+    " S "
+  ],
+  "key": {
+    "F": {
+      "item": "ancient_flame_balrog:fire_heart"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "S": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "ancient_flame_balrog:flaming_balrog_sword",
+    "count": 1
+  }
+}

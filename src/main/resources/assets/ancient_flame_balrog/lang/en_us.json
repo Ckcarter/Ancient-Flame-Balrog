@@ -1,4 +1,9 @@
 {
   "entity.ancient_flame_balrog.ancient_flame_balrog": "Ancient Flame Balrog",
-  "item.ancient_flame_balrog.ancient_flame_balrog_spawn_egg": "Ancient Flame Balrog Spawn Egg"
+  "item.ancient_flame_balrog.ancient_flame_balrog_spawn_egg": "Ancient Flame Balrog Spawn Egg",
+  "item.ancient_flame_balrog.shadow_blade": "Shadow Blade",
+  "item.ancient_flame_balrog.flaming_balrog_sword": "Flaming Balrog Sword",
+  "item.ancient_flame_balrog.balrog_horn": "Balrog Horn",
+  "item.ancient_flame_balrog.fire_heart": "Fire Heart",
+  "itemGroup.ancient_flame_balrog": "Ancient Flame Balrog"
 }

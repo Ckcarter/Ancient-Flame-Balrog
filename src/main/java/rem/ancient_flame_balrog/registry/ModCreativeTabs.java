@@ -20,6 +20,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.ANCIENT_FLAME_BALROG_SPAWN_EGG.get());
                         output.accept(ModItems.BALROG_HORN.get());
                         output.accept(ModItems.FIRE_HEART.get());
+                        output.accept(ModItems.FLAMING_BALROG_SWORD.get());
+                        output.accept(ModItems.SHADOW_BLADE.get());
                     })
                     .build());
 
