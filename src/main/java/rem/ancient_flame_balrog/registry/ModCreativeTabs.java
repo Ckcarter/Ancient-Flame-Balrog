@@ -15,12 +15,11 @@ public class ModCreativeTabs {
     public static final RegistryObject<CreativeModeTab> BALROG_TAB =
             CREATIVE_MODE_TABS.register("balrog_tab", () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.ancient_flame_balrog"))
-                    .icon(() -> ModItems.ANCIENT_FLAME_BALROG_SPAWN_EGG.get().getDefaultInstance())
+                    .icon(() -> ModItems.BALROG_PROXIMITY_SPAWNER.get().getDefaultInstance())
                     .displayItems((params, output) -> {
-                        output.accept(ModItems.ANCIENT_FLAME_BALROG_SPAWN_EGG.get());
                         output.accept(ModItems.BALROG_HORN.get());
                         output.accept(ModItems.FIRE_HEART.get());
-                        output.accept(ModItems.FLAMING_BALROG_SWORD.get());
+                       // output.accept(ModItems.FLAMING_BALROG_SWORD.get());
                         output.accept(ModItems.SHADOW_BLADE.get());
 
                         output.accept(ModItems.BALROG_PROXIMITY_SPAWNER.get());
